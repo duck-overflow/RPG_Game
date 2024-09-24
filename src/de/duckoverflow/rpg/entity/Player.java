@@ -16,7 +16,7 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    int hasKey = 0;
+    public int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -26,12 +26,12 @@ public class Player extends Entity {
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
         solidArea = new Rectangle(8, 16, 32, 32);
-        solidArea.x = 8;
+        solidArea.x = 11;
         solidArea.y = 16;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 32;
-        solidArea.height = 32;
+        solidArea.width = 25;
+        solidArea.height = 25;
 
         setDefaultValues();
         getPlayerImage();
@@ -116,18 +116,28 @@ public class Player extends Entity {
                     gp.playSoundEffect(1);
                     hasKey++;
                     gp.obj[index] = null;
+                    gp.ui.showMessage("Key acquired!");
                     break;
                 case "Door":
                     if (hasKey > 0) {
                         gp.playSoundEffect(3);
                         gp.obj[index] = null;
                         hasKey--;
+                        gp.ui.showMessage("Door opened!");
+                    } else {
+                        gp.ui.showMessage("You need a key for that!");
                     }
                     break;
                 case "Boots":
                     gp.playSoundEffect(2);
                     speed += 1;
                     gp.obj[index] = null;
+                    gp.ui.showMessage("Speed up!");
+                    break;
+                case "Chest":
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    gp.playSoundEffect(4);
                     break;
             }
 
@@ -157,7 +167,8 @@ public class Player extends Entity {
                 break;
         }
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-
+        // Draw rectangle
+//        g2.setColor(Color.RED);
+//        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
-
 }
