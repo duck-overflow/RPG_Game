@@ -1,6 +1,7 @@
 package de.duckoverflow.rpg.main;
 
 import de.duckoverflow.rpg.entity.Player;
+import de.duckoverflow.rpg.object.SuperObject;
 import de.duckoverflow.rpg.tile.TileManager;
 
 import javax.swing.*;
@@ -25,8 +26,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
 
     // FPS
     int fps = 60;
@@ -36,6 +35,8 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH);
     TileManager tileM = new TileManager(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetSetter aSettter = new AssetSetter(this);
+    public SuperObject[] obj = new SuperObject[10];
 
     /**
      * GamePanel constructor.
@@ -46,6 +47,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+    }
+
+    /**
+     * Game Setup place inital Objects.
+     */
+    public void setupGame() {
+        aSettter.setObject();
     }
 
     /**
@@ -64,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        double drawInterval = 1000000000 / fps; // 0.01666 seconds
+        double drawInterval = (double) 1000000000 / fps; // 0.01666 seconds
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -112,7 +120,15 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
+        // Tile
         tileM.draw(g2);
+
+        // Object
+        for (SuperObject superObject : obj) {
+            if (superObject != null) superObject.draw(g2, this);
+        }
+
+        // Player
         player.draw(g2);
 
         g2.dispose();
