@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class TileManager {
 
@@ -29,31 +30,31 @@ public class TileManager {
 
         try {
             tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
 
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
             tile[1].collision = true;
 
             tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
             tile[2].collision = true;
 
             tile[3] = new Tile();
-            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
 
             tile[4] = new Tile();
-            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
             tile[4].collision = true;
 
             tile[5] = new Tile();
-            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
+            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
 
             tile[6] = new Tile();
-            tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/half_water_down.png"));
+            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/half_water_down.png")));
 
             tile[7] = new Tile();
-            tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/half_water_up.png"));
+            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/half_water_up.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,6 +65,7 @@ public class TileManager {
         try {
 
             InputStream iS = getClass().getResourceAsStream(path);
+            assert iS != null;
             BufferedReader bR = new BufferedReader(new InputStreamReader(iS));
 
             int col = 0;
