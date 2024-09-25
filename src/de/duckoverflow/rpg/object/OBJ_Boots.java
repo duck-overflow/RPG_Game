@@ -1,16 +1,22 @@
 package de.duckoverflow.rpg.object;
 
+import de.duckoverflow.rpg.main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.Objects;
 
 public class OBJ_Boots extends SuperObject {
 
-    public OBJ_Boots() {
+    GamePanel gp;
 
+
+    public OBJ_Boots(GamePanel gp) {
+        this.gp = gp;
         name = "Boots";
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/boots.png")));
+            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
