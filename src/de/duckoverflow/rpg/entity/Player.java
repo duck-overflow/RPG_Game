@@ -17,7 +17,6 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    public int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -95,8 +94,8 @@ public class Player extends Entity {
             gp.cChecker.checkTile(this);
 
             // Check object collision
-            int objIndex = gp.cChecker.checkObject(this, true);
-            pickUpObj(objIndex);
+            //int objIndex = gp.cChecker.checkObject(this, true);
+            //pickUpObj(objIndex);
 
             // IF Collision is false, player can move
             if (!collisionOn) {
@@ -117,45 +116,15 @@ public class Player extends Entity {
 
         }
     }
-
+/*
     public void pickUpObj(int index) {
 
         if (index != 999) {
 
-            String objectName = gp.obj[index].name;
-
-            switch (objectName) {
-                case "Key":
-                    gp.playSoundEffect(1);
-                    hasKey++;
-                    gp.obj[index] = null;
-                    gp.ui.showMessage("Key acquired!");
-                    break;
-                case "Door":
-                    if (hasKey > 0) {
-                        gp.playSoundEffect(3);
-                        gp.obj[index] = null;
-                        hasKey--;
-                        gp.ui.showMessage("Door opened!");
-                    } else {
-                        gp.ui.showMessage("You need a key for that!");
-                    }
-                    break;
-                case "Boots":
-                    gp.playSoundEffect(2);
-                    speed += 1;
-                    gp.obj[index] = null;
-                    gp.ui.showMessage("Speed up!");
-                    break;
-                case "Chest":
-                    gp.ui.gameFinished = true;
-                    gp.stopMusic();
-                    gp.playSoundEffect(4);
-                    break;
-            }
         }
-    }
 
+    }
+*/
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
