@@ -1,5 +1,6 @@
 package de.duckoverflow.rpg.main;
 
+import de.duckoverflow.rpg.entity.Entity;
 import de.duckoverflow.rpg.entity.Player;
 import de.duckoverflow.rpg.object.SuperObject;
 import de.duckoverflow.rpg.tile.TileManager;
@@ -35,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     TileManager tileM = new TileManager(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public AssetSetter aSettter = new AssetSetter(this);
+    public AssetSetter aSetter = new AssetSetter(this);
     Sound music = new Sound();
     //Sound effect = new Sound();
     public UI ui = new UI(this);
@@ -43,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     // Entity and Objects
     public Player player = new Player(this, keyH);
     public SuperObject[] obj = new SuperObject[10];
+    public Entity[] npc = new Entity[10];
 
     // Game State
     public int gameState;
@@ -64,7 +66,8 @@ public class GamePanel extends JPanel implements Runnable {
      * Game Setup place initial Objects.
      */
     public void setupGame() {
-        aSettter.setObject();
+        aSetter.setObject();
+        aSetter.setNPC();
         playMusic(0);
         gameState = playState;
         //temporary
@@ -125,6 +128,13 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gameState == playState) {
             player.update();
+
+            // NPC
+            for (Entity entity : npc) {
+                if (entity != null) {
+                    entity.update();
+                }
+            }
         }
 /*        if (gameState == pauseState) {
             // pause game
@@ -153,6 +163,15 @@ public class GamePanel extends JPanel implements Runnable {
         // Object
         for (SuperObject superObject : obj) {
             if (superObject != null) superObject.draw(g2, this);
+        }
+
+        // NPC
+        for (Entity entity : npc) {
+
+            if (entity != null) {
+                entity.draw(g2);
+            }
+
         }
 
         // Player
